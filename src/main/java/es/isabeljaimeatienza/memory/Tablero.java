@@ -28,7 +28,7 @@ public class Tablero extends GridPane{
          //Setting size for the pane  
         
        for(int i = 0; i < columns; i++) {
-            ColumnConstraints column = new ColumnConstraints(TAM_CARTA);
+            ColumnConstraints column = new ColumnConstraints(107);
             this.getColumnConstraints().add(column);
         }
 
@@ -42,7 +42,7 @@ public class Tablero extends GridPane{
         this.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
         Scene scene = new Scene(this, (columns * 40) + 100, (rows * 40) + 100, Color.WHITE);
         Carta carta = new Carta(1);
-        this.getChildren().add(carta);
+        this.add(carta, 2,0);
        
         
     
