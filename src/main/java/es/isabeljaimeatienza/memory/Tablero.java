@@ -44,17 +44,7 @@ public class Tablero extends GridPane{
        
         
         
-//       private void colocarCarta(int columna, int carta) {
-//         Random aleatorio = new Random();
-//        int posColumn= aleatorio.nextInt(5);
-//        for (int i=1; i<rows; i++)
-//            this.add(carta,aleatorio,aleatorio);
-//       
-//   
-////        Scene scene = new Scene(this, (columns * 40) + 100, (rows * 40) + 100, Color.BLUE);
-// 
-//        this.add(carta, 2,0);
-//       
+
         
     
                // Detectar clic en ratón (pulsado y soltado)
@@ -66,7 +56,21 @@ public class Tablero extends GridPane{
                         mouseEvent.getX() + " : " + mouseEvent.getY());
                     int clicX = (int) mouseEvent.getX();
 //                    int columna = clicX / Carta.TAM_CARTA;
-                    colocarCarta(columns, rows, numCarta);
+                    colocarCarta(0, 0, 0);//Columna-fila-carta
+                    colocarCarta(1, 0, 0);
+                    colocarCarta(2, 0, 1);
+                    colocarCarta(3, 0, 1);
+                    colocarCarta(4, 0, 2);
+                    colocarCarta(5, 0, 2);
+                    colocarCarta(0, 1, 3);
+                    colocarCarta(1, 1, 3);
+                    colocarCarta(2, 1, 4);
+                    colocarCarta(3, 1, 4);
+                    colocarCarta(4, 1, 5);
+                    colocarCarta(5, 1, 5);
+                    colocarCarta(0, 2, 6);
+                    colocarCarta(1, 2, 6);
+                    
                     System.out.println("Columna:"+ columns+ "Filas:"+ rows);
                 
                 }
@@ -75,10 +79,9 @@ public class Tablero extends GridPane{
        
    private void colocarCarta(int columna, int fila, int numCarta){
        Carta carta = new Carta(numCarta); // numCarta te dirá quien da el click, viene en el parametro de este metodo el anterior da igual
-       carta.setLayoutX((columna + 0.5) * Carta.TAM_CARTA);
-       carta.setLayoutY((fila + 0.5) * Carta.TAM_CARTA);
+     
        //carta.setLayoutY(Carta.TAM_CARTA/2);
-       this.getChildren().add(carta);
+       this.add(carta,columna,fila);
        
     }  
     
