@@ -56,23 +56,17 @@ public class Tablero extends GridPane{
                         mouseEvent.getX() + " : " + mouseEvent.getY());
                     int clicX = (int) mouseEvent.getX();
 //                    int columna = clicX / Carta.TAM_CARTA;
-                    colocarCarta(0, 0, 0);//Columna-fila-carta
-                    colocarCarta(1, 0, 0);
-                    colocarCarta(2, 0, 1);
-                    colocarCarta(3, 0, 1);
-                    colocarCarta(4, 0, 2);
-                    colocarCarta(5, 0, 2);
-                    colocarCarta(0, 1, 3);
-                    colocarCarta(1, 1, 3);
-                    colocarCarta(2, 1, 4);
-                    colocarCarta(3, 1, 4);
-                    colocarCarta(4, 1, 5);
-                    colocarCarta(5, 1, 5);
-                    colocarCarta(0, 2, 6);
-                    colocarCarta(1, 2, 6);
-                    
-                    System.out.println("Columna:"+ columns+ "Filas:"+ rows);
-                
+                    double numeroCarta = 0;
+                    for (int fi=0; fi<=4; fi++){
+                        for(int co=0; co<=5; co++){
+                            
+                           colocarCarta(co,fi,(int) Math.floor(numeroCarta)); // redondeo hacia abajo con math.floor
+                           numeroCarta = numeroCarta+0.5;
+                            System.out.println("Columna:"+ co+"Fila:"+ fi);    
+                        }
+                    }//Columna-fila-carta
+                   
+                   
                 }
             });
         }
