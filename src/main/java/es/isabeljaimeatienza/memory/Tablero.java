@@ -17,19 +17,24 @@ import javafx.scene.layout.RowConstraints;
  * @author cadit
  */
 public class Tablero extends GridPane{
-    static int numCarta=0;
-    Carta carta = new Carta(numCarta);
+  
+    
     int rows = 4;
     int columns = 6;
+    Random randomCard = new Random();   
+    int RC =randomCard.nextInt(12);
+    Carta carta = new Carta(RC);
+    static int numCarta=0;
+    
     public Tablero(){
-        
-    carta= new Carta(numCarta);
-        //Creating a Grid Pane 
-        // GridPane gridPane = new GridPane();  
+   
+    carta= new Carta(RC);
+       
+ 
          //Setting size for the pane  
        
        for(int i = 0; i < columns; i++) {
-            ColumnConstraints column = new ColumnConstraints(107);
+            ColumnConstraints column = new ColumnConstraints(100);
             this.getColumnConstraints().add(column);
         }
 
@@ -56,12 +61,12 @@ public class Tablero extends GridPane{
                         mouseEvent.getX() + " : " + mouseEvent.getY());
                     int clicX = (int) mouseEvent.getX();
 //                    int columna = clicX / Carta.TAM_CARTA;
-                    double numeroCarta = 0;
+                    double RC = 0;
                     for (int fi=0; fi<=4; fi++){
                         for(int co=0; co<=5; co++){
                             
-                           colocarCarta(co,fi,(int) Math.floor(numeroCarta)); // redondeo hacia abajo con math.floor
-                           numeroCarta = numeroCarta+0.5;
+                           colocarCarta(co,fi,(int) Math.floor(RC)); // redondeo hacia abajo con math.floor
+                           RC = RC+0.5;
                             System.out.println("Columna:"+ co+"Fila:"+ fi);    
                         }
                     }//Columna-fila-carta
@@ -71,8 +76,9 @@ public class Tablero extends GridPane{
             });
         }
        
-   private void colocarCarta(int columna, int fila, int numCarta){
-       Carta carta = new Carta(numCarta); // numCarta te dirá quien da el click, viene en el parametro de este metodo el anterior da igual
+   private void colocarCarta(int columna, int fila, int RC){
+       
+       Carta carta = new Carta(RC); // numCarta te dirá quien da el click, viene en el parametro de este metodo el anterior da igual
      
        //carta.setLayoutY(Carta.TAM_CARTA/2);
        this.add(carta,columna,fila);

@@ -4,7 +4,6 @@
  */
 package es.isabeljaimeatienza.memory;
 
-
 import java.lang.reflect.Array;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -15,16 +14,15 @@ public class Carta extends Group{
      static final short TAM_CARTA = 70; //tamaño de la carta// para usar la ficha sin tener un objeto usamos static
         
         public Carta(int numCarta){ 
-            
+           
             //Cartas 
-            Image[] carta = new Image[7];
-            carta[0] = new javafx.scene.image.Image(getClass().getResourceAsStream("/images/Carta1.png"));
-            carta[1]= new javafx.scene.image.Image(getClass().getResourceAsStream("/images/Carta2.jpg"));
-            carta[2] = new javafx.scene.image.Image(getClass().getResourceAsStream("/images/Carta3.jpg"));
-            carta[3] = new javafx.scene.image.Image(getClass().getResourceAsStream("/images/Carta4.jpg"));
-            carta[4] = new javafx.scene.image.Image(getClass().getResourceAsStream("/images/Carta5.jpg"));
-            carta[5] = new javafx.scene.image.Image(getClass().getResourceAsStream("/images/Carta6.jpg"));
-            carta[6] = new javafx.scene.image.Image(getClass().getResourceAsStream("/images/Carta7.jpg"));
+            Image[] carta = new Image[12];
+                for(int card = 0; card<12; card++){
+                    carta[card] = new javafx.scene.image.Image(getClass().getResourceAsStream("/images/Carta" + card +".jpg"));
+                        
+                    }
+            
+//           
             
             //Sacar carta dependiendo del numero de la carta
 //            ImageView imageView_Carta = null;  
@@ -43,7 +41,5 @@ public class Carta extends Group{
             rectcarta.setLayoutY(0);
         }
 
-    }
-
-
+}
 
