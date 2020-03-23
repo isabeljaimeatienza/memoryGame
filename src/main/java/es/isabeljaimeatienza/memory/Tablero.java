@@ -19,8 +19,8 @@ import javafx.scene.layout.RowConstraints;
 public class Tablero extends GridPane{
   
     
-    static final int ROWS = 3;
-    static final int COLUMNS = 5;
+    static final int ROWS = 4;
+    static final int COLUMNS = 6;
     Logica logica = new Logica();
     
     
@@ -64,8 +64,8 @@ public class Tablero extends GridPane{
                     
                     double numeroCarta = 0;
                     int indice = 0;
-                    for (int fi=0; fi<=ROWS; fi++){
-                        for(int co=0; co<=COLUMNS; co++){
+                    for (int fi=0; fi<ROWS; fi++){
+                        for(int co=0; co<COLUMNS; co++){
 //                           System.out.println("Columna:"+ co+"Fila:"+ fi+"Carta:" + (int)numeroCarta); 
                            
                             colocarCarta(co,fi,((int) Math.floor(numeroCarta))); // redondeo hacia abajo con math.floor
@@ -103,15 +103,17 @@ public class Tablero extends GridPane{
        
         indice=0;
     
-        for (int fi=0; fi<=ROWS; fi++){
-                        for(int co=0; co<=COLUMNS; co++){
+        for (int fi=0; fi<ROWS; fi++){
+                        for(int co=0; co<COLUMNS; co++){
                             indice= 6*fi+co;
 //                           System.out.println("Columna:"+ co+"Fila:"+ fi+"indice:"+indice);
                                    }           
                   }
        
         int num=0;
-        this.getChildren().get(0); 
+        this.getChildren().get(2); 
+        System.out.println("Indice"+indice);
+
         }
     }  
    

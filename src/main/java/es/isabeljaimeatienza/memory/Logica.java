@@ -39,7 +39,7 @@ public class Logica {
     public void mostrarConsola(){
         for(int f=0; f<ROWS; f++){
             for(int c=0; c<COLUMNS; c++){
-                System.out.print(cuadricula[f][c]); // mostraría en consola los numeros de carta en su posición
+                System.out.print("|"+cuadricula[f][c]); // mostraría en consola los numeros de carta en su posición
             }
             System.out.println("");
          
