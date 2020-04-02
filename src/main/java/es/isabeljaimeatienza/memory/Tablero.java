@@ -28,7 +28,9 @@ public class Tablero extends GridPane {
     static final int COLUMNS = 6;
     Logica logica = new Logica();
     int contador = 0;
+    int contadorTotal = 0;
     int cartaLevantada = 0;
+    Carta primeraCarta;
 
     public Tablero() {
 
@@ -119,24 +121,42 @@ public class Tablero extends GridPane {
 
                 if (contador == 1) {
                     cartaLevantada = numeroCarta;
+                    primeraCarta = carta;
+
                 }
                 if (contador == 2) {
                     if (cartaLevantada == numeroCarta) {
                         System.out.println("correcto!!!");
+                        contadorTotal++;
+                        //contadorTotal compara parejas se le suma 1
                     } else {
                         System.out.println("error!");
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("UPS!");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Error!! Intentalo de nuevo");
+                        alert.showAndWait();
                         carta.CambiarImagenCarta(Carta.REVERS);
+                        primeraCarta.CambiarImagenCarta(Carta.REVERS);
 
                     }
                     contador = 0;
-
+                    if(contadorTotal==12){
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("You WIN!");
+                        alert.setHeaderText(null);
+                        alert.setContentText("¡¡¡Has ganado!!!");
+                        alert.showAndWait();
+                    }
                 }
 
             }
+            //contador para ir viendo las cartas a las que le doy la vuelta(si contadorTotal= numerocartas total fin partida)
             //contador que inicialmente valga 0 y que aumente a medida que se haga click en determinada carta
             //si contador ha llegado a 2 compruebe pareja (inicialmente hacer con sout
             //variable para cartas que se levanten; la primera carta levantada es la que comparamos
             // si contador es 1 guardar numero carta levantada 
+            //variable para guardar objeto carta
 //               
 
             // Crear método que me coja la carta que hay en una determinada posición (1,1) que se pase por parámetro
