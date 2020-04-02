@@ -5,15 +5,17 @@
  */
 package es.isabeljaimeatienza.memory;
 
+import java.util.Optional;
 import java.util.Random;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import static javafx.geometry.Pos.CENTER;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 
 /**
@@ -25,6 +27,8 @@ public class Tablero extends GridPane {
     static final int ROWS = 4;
     static final int COLUMNS = 6;
     Logica logica = new Logica();
+    int contador = 0;
+    int cartaLevantada = 0;
 
     public Tablero() {
 
@@ -39,77 +43,122 @@ public class Tablero extends GridPane {
             this.getRowConstraints().add(row);
         }
 
-        this.setStyle("-fx-background-color: WHITE ;-fx-padding: 200 ;-fx-insets-colspan:23; -fx-insets-background: BLUE; -fx-grid-lines-visible: true");
+        this.setStyle("-fx-background-color: WHITE;-fx-insets-colspan:23; -fx-Vgap=20; -fx-grid-lines-visible: true");
+        this.setAlignment(CENTER);
+        this.setVgap(10);
+        this.setHgap(10);
+        this.setStyle("-fx-background-image: url('/images/fondo.jpg');");
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("¿Comenzamos?");
+        alert.setHeaderText("¿Desea comenzar una nueva partida?");
+        alert.setContentText("Continuar");
 
-        // Detectar clic en ratÃ³n (pulsado y soltado)
-        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                // Insertar aquÃ­ el cÃ³digo a ejecutar cuando se haga clic en el ratÃ³n
-                System.out.println("Mouse clicked X , Y:  "
-                        + mouseEvent.getX() + " : " + mouseEvent.getY());
-                int clicX = (int) mouseEvent.getX();
-                logica.mostrarConsola();
-                int columna = clicX / Carta.TAM_CARTA;
-//                    System.out.println("Columna: " + columna);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            // ... user chose OK
 
-                double numeroCarta = 0;
-                int indice = 0;
-                Random r = new Random();
-                int rC = r.nextInt(11);
-                int rO = r.nextInt(11);
-                int cartaOrigen = rO;
-                int cartaDestino = rC;
-                cartaOrigen = rO;
-                cartaDestino = rC;
-                rC = cartaOrigen;
-                rO = cartaDestino;
-                for (int fi = 0; fi < ROWS; fi++) {
-                    for (int co = 0; co < COLUMNS; co++) {
+            // Detectar clic en ratÃ³n (pulsado y soltado)
+//        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent mouseEvent) {
+            // Insertar aquÃ­ el cÃ³digo a ejecutar cuando se haga clic en el ratÃ³n
+//                System.out.println("Mouse clicked X , Y:  "
+//                        + mouseEvent.getX() + " : " + mouseEvent.getY());
+//                int clicX = (int) mouseEvent.getX();
+            logica.mostrarConsola();
+//      
+            double numeroCarta = 0;
+            int indice = 0;
+            Random r = new Random();
+            int rC = r.nextInt(11);
+            int rO = r.nextInt(11);
+            int cartaOrigen = rO;
+            int cartaDestino = rC;
+            cartaOrigen = rO;
+            cartaDestino = rC;
+            rC = cartaOrigen;
+            rO = cartaDestino;
+            for (int fi = 0; fi < ROWS; fi++) {
+                for (int co = 0; co < COLUMNS; co++) {
 //                           System.out.println("Columna:"+ co+"Fila:"+ fi+"Carta:" + (int)numeroCarta); 
 
 //                        borrarCarta(fi, co, indice); //redondeo hacia abajo con math.floor
-                        // Consulta el valor de matriz y coloca la carta que se encuentre en ella   
-                        colocarCarta(fi, co, logica.cuadricula[fi][co]);
+                    // Consulta el valor de matriz y coloca la carta que se encuentre en ella   
+                    colocarCarta(fi, co, logica.cuadricula[fi][co]);
 
 //                           System.out.println("indice:"+indice+"numCarta:"+numeroCarta);
-                    }
-                }//Columna-fila-carta
+                }
+//                }//Columna-fila-carta
 
+//            }
             }
-        });
-
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
     }
 
     private void colocarCarta(int fila, int columna, int numeroCarta) {
 
+        //contador antes de esto y aqui aumentar de 1 en 1
 //       System.out.println("co:"+columna+"fi:"+fila+"numCarta:"+numeroCarta);
         Carta carta = new Carta(numeroCarta); // numCarta te dirá¡ quien da el click, viene en el parametro de este metodo el anterior da igual
-
+        carta.CambiarImagenCarta(Carta.REVERS);// como es para TODAS las cartas sería más correcto hacer revers static
         carta.setLayoutY(Carta.TAM_CARTA / 2);
-
         this.add(carta, columna, fila); // para quitar carta usar remove en vez de add
         this.setAlignment(Pos.CENTER);
-    }
 
-    // Crear método que me coja la carta que hay en una determinada posición (1,1) que se pase por parámetro
-    // Guardar en variable el numero de carta que le corresponde    
-//       
-    public void sacarCarta(int indice) { // la carta la paso como char porque sino da error
+        carta.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+//              
+//                 Insertar aquÃ­ el cÃ³digo a ejecutar cuando se haga clic en el ratÃ³n
+                contador++;
+//                System.out.println("NumCartas = " + contador);
+//                System.out.println("numeroCarta:" + numeroCarta);
+                carta.CambiarImagenCarta(numeroCarta);
+
+                if (contador == 1) {
+                    cartaLevantada = numeroCarta;
+                }
+                if (contador == 2) {
+                    if (cartaLevantada == numeroCarta) {
+                        System.out.println("correcto!!!");
+                    } else {
+                        System.out.println("error!");
+                        carta.CambiarImagenCarta(Carta.REVERS);
+
+                    }
+                    contador = 0;
+
+                }
+
+            }
+            //contador que inicialmente valga 0 y que aumente a medida que se haga click en determinada carta
+            //si contador ha llegado a 2 compruebe pareja (inicialmente hacer con sout
+            //variable para cartas que se levanten; la primera carta levantada es la que comparamos
+            // si contador es 1 guardar numero carta levantada 
+//               
+
+            // Crear método que me coja la carta que hay en una determinada posición (1,1) que se pase por parámetro
+            // Guardar en variable el numero de carta que le corresponde    
+            public void sacarCarta(int indice) { // la carta la paso como char porque sino da error
 //        
 
-        indice = 0;
+                indice = 0;
 
-        for (int fi = 0; fi < ROWS; fi++) {
-            for (int co = 0; co < COLUMNS; co++) {
-                indice = 6 * fi + co;
+                for (int fi = 0; fi < ROWS; fi++) {
+                    for (int co = 0; co < COLUMNS; co++) {
+                        indice = 6 * fi + co;
 //                           System.out.println("Columna:"+ co+"Fila:"+ fi+"indice:"+indice);
+                    }
+                }
+
+//                this.getChildren().get(indice);
             }
-        }
-
-        this.getChildren().get(indice);
-
+        });
     }
+}
+
 //
 //    private void borrarCarta() {
 //
@@ -128,4 +177,6 @@ public class Tablero extends GridPane {
 //        this.getChildren().remove(indice); // para quitar carta usar remove en vez de add
 //        this.setAlignment(Pos.CENTER);
 //    }
-}
+//        }
+//    }
+//}

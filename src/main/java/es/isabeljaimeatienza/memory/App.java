@@ -2,6 +2,7 @@ package es.isabeljaimeatienza.memory;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -17,7 +18,7 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setTitle("Memory");
-
+//        stage.getIcons().add(new Image("images:carta1.jpg"));
         Tablero tablero = new Tablero();
         root.getChildren().add(tablero);
     

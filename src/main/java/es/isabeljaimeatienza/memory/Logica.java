@@ -30,7 +30,7 @@ public class Logica {
         for (int f = 0; f < ROWS; f++) {
             for (int c = 0; c < COLUMNS; c++) {
 
-                colocarCarta(c, f, ((int) Math.floor(numeroCarta))); // redondeo hacia abajo con math.floor
+//                colocarCarta(c, f, ((int) Math.floor(numeroCarta))); // redondeo hacia abajo con math.floor
                 cuadricula[f][c] = ((int) Math.floor(numeroCarta));
                 numeroCarta = numeroCarta + 0.5;
 
