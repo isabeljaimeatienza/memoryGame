@@ -31,6 +31,9 @@ public class Tablero extends GridPane {
     int contadorTotal = 0;
     int cartaLevantada = 0;
     Carta primeraCarta;
+    int indicePrimeraCarta = 0;
+    int indiceSegundaCarta = 0;
+    Carta segundaCarta;
 
     public Tablero() {
 
@@ -122,31 +125,50 @@ public class Tablero extends GridPane {
                 if (contador == 1) {
                     cartaLevantada = numeroCarta;
                     primeraCarta = carta;
+                    indicePrimeraCarta = 6 * fila + columna;
 
                 }
                 if (contador == 2) {
-                    if (cartaLevantada == numeroCarta) {
-                        System.out.println("correcto!!!");
-                        contadorTotal++;
-                        //contadorTotal compara parejas se le suma 1
-                    } else {
-                        System.out.println("error!");
-                        Alert alert = new Alert(AlertType.INFORMATION);
-                        alert.setTitle("UPS!");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Error!! Intentalo de nuevo");
-                        alert.showAndWait();
-                        carta.CambiarImagenCarta(Carta.REVERS);
-                        primeraCarta.CambiarImagenCarta(Carta.REVERS);
+                    segundaCarta = carta;
+                    indiceSegundaCarta = 6 * fila + columna;
+                    System.out.println("indicePrimero:"+indicePrimeraCarta+"indiceSegunda:"+indiceSegundaCarta);
+                    
+                    if (indicePrimeraCarta != indiceSegundaCarta) {
+                        
+                        if (cartaLevantada == numeroCarta) {
+                            System.out.println("correcto!!!");
+                            contadorTotal++;
+                            //contadorTotal compara parejas se le suma 1
+                        } else {
+                            System.out.println("error!");
+                            Alert alert = new Alert(AlertType.INFORMATION);
+                            alert.setTitle("UPS!");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Error!! Intentalo de nuevo");
+                            alert.showAndWait();
+                            carta.CambiarImagenCarta(Carta.REVERS);
+                            primeraCarta.CambiarImagenCarta(Carta.REVERS);
 
-                    }
-                    contador = 0;
-                    if(contadorTotal==12){
-                        Alert alert = new Alert(AlertType.INFORMATION);
-                        alert.setTitle("You WIN!");
-                        alert.setHeaderText(null);
-                        alert.setContentText("¡¡¡Has ganado!!!");
-                        alert.showAndWait();
+                        }
+                        contador = 0;
+                        if (contadorTotal == 12) {
+                            Alert alert = new Alert(AlertType.CONFIRMATION);
+                            alert.setTitle("¡¡Has GANADO!!");
+                            alert.setHeaderText("you win");
+                            alert.setContentText("¿Volver a jugar?");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if (result.get() == ButtonType.OK) {
+                                resetGame(); // ... user chose OK
+                                //guardar indice de la primera carta (parecido a lo del numCarta y carta para comparar)
+                                //
+                            } else {
+                                // ... user chose CANCEL or closed the dialog
+                            }
+                        }
+                    }else{
+                        //para cuando se clica en la misma carta
+                        contador=1;
                     }
                 }
 
@@ -177,26 +199,24 @@ public class Tablero extends GridPane {
             }
         });
     }
-}
 
-//
-//    private void borrarCarta() {
-//
-////       System.out.println("co:"+columna+"fi:"+fila+"numCarta:"+numeroCarta);
-//        indice = 0;
-//
-//        for (int fi = 0; fi < ROWS; fi++) {
-//            for (int co = 0; co < COLUMNS; co++) {
-//                indice = 6 * fi + co;
-////                           System.out.println("Columna:"+ co+"Fila:"+ fi+"indice:"+indice);
+
+        private void resetGame(){
+        contador=0;
+        contadorTotal=0;
+        for (int fi = 0; fi < ROWS; fi++) {
+                for (int co = 0; co < COLUMNS; co++) {
+//                           System.out.println("Columna:"+ co+"Fila:"+ fi+"Carta:" + (int)numeroCarta); 
+
+//                        borrarCarta(fi, co, indice); //redondeo hacia abajo con math.floor
+                    // Consulta el valor de matriz y coloca la carta que se encuentre en ella   
+                    colocarCarta(fi, co, logica.cuadricula[fi][co]);
+
+//                           System.out.println("indice:"+indice+"numCarta:"+numeroCarta);
+                }
+//                }//Columna-fila-carta
+
 //            }
-//        }
-//
-//        this.getChildren().get(indice);
-//
-//        this.getChildren().remove(indice); // para quitar carta usar remove en vez de add
-//        this.setAlignment(Pos.CENTER);
-//    }
-//        }
-//    }
-//}
+            }
+        }
+}
